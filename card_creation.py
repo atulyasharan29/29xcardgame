@@ -231,7 +231,35 @@ def setup():
     if winner == robot_3.name:
         game.color = r3_mode_suit
     game.color = game.color.capitalize()
+setup()
+import turtle
 
+player_cards = []
+for i in range(8):
+    player_cards.append(player.cards.iloc[i]["Image"])
+
+print(player_cards)
+
+# Create the screen object
+win = turtle.Screen()
+
+# Set the background color
+win.bgcolor("green")
+win.setup(height=1.0, width=1.0)
+win.tracer(10)
+
+# Add resized images to the screen
+for img in imgs:
+    win.addshape(img)
+
+pen = turtle.Turtle()
+pen.pu()
+pen.ht()
+
+pen1 = turtle.Turtle()
+pen1.pu()
+pen1.ht()
+current_hand = pd.DataFrame(data = {}, columns = df.columns)
 def flow_chart(r):
    
     global current_hand, game
@@ -241,11 +269,32 @@ def flow_chart(r):
     if len(current_hand) == 0:
         if len(r.cards[r.cards['Points'] == 3]) > 0:
             card_to_play = r.cards[r.cards['Points'] == 3].sample(n = 1, random_state = None)['Name'].iloc[0]
-            print('{} plays {}'.format(r.name, card_to_play))
+            if r == robot_1:
+                        pen1.goto(-97.5,0)
+                        pen1.shape(df[df["Name"] == card_to_play]["Image"])
+            elif r == robot_2:
+                        pen1.goto(97.5,0)
+                        pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                        pen1.stamp()
+            elif r == robot_3:
+                        pen1.goto(0,92.5)
+                        pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                        pen1.stamp()
             play_card(card_to_play, r)
         else: 
             card_to_play = r.cards[r.cards['Points'] == r.cards['Points'].min()].sample(n = 1, random_state = None)['Name'].iloc[0]
-            print('{} plays {}'.format(r.name, card_to_play))
+            if r == robot_1:
+                                pen1.goto(-97.5,0)
+                                pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                                pen1.stamp()
+            elif r == robot_2:
+                                pen1.goto(97.5,0)
+                                pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                                pen1.stamp()
+            elif r == robot_3:
+                                pen1.goto(0,92.5)
+                                pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                                pen1.stamp()
             play_card(card_to_play,r)
     else: 
         current_suit = current_hand.iloc[0]['Suit']
@@ -256,7 +305,18 @@ def flow_chart(r):
             if how_many == 1:
                 card_to_play = r.cards[r.cards['Suit'] == current_suit]['Name']
                 card_to_play = card_to_play.iloc[0]
-                print('{} plays {}'.format(r.name, card_to_play))
+                if r == robot_1:
+                            pen1.goto(-97.5,0)
+                            pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                            pen1.stamp()
+                elif r == robot_2:
+                            pen1.goto(97.5,0)
+                            pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                            pen1.stamp()
+                elif r == robot_3:
+                            pen1.goto(0,92.5)
+                            pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                            pen1.stamp()
                 play_card(card_to_play, r)
 
             if how_many > 1:
@@ -275,20 +335,55 @@ def flow_chart(r):
                         cs = r.cards[r.cards['Suit'] == current_suit]
                         card_to_play = cs[cs['Points'] == cs['Points'].min()].sample(n = 1)['Name']
                         card_to_play = card_to_play.iloc[0]
-                        print('{} plays {}'.format(r.name, card_to_play))
+                        if r == robot_1:
+                                    pen1.goto(-97.5,0)
+                                    pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                                    pen1.stamp()
+                        elif r == robot_2:
+                                    pen1.goto(97.5,0)
+                                    pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                                    pen1.stamp()
+                        elif r == robot_3:
+                                    pen1.goto(0,92.5)
+                                    pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                                    pen1.stamp()
+                                    
                         play_card(card_to_play, r)
                     elif winner_index == len(current_hand) - 2:
                         cs = r.cards[r.cards['Suit'] == current_suit]
                         card_to_play = cs[cs['Points'] == cs['Points'].max()].sample(n = 1)['Name']
                         card_to_play = card_to_play.iloc[0]
-                        print('{} plays {}'.format(r.name, card_to_play))
-                        play_card(card_to_play, r)
+                    if r == robot_1:
+                                pen1.goto(-97.5,0)
+                                pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                                pen1.stamp()
+                    elif r == robot_2:
+                                pen1.goto(97.5,0)
+                                pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                                pen1.stamp()
+
+                    elif r == robot_3:
+                                pen1.goto(0,92.5)
+                                pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                                pen1.stamp()                      
+                    play_card(card_to_play, r)
                         
 
                 else:
                     card_to_play = r.cards[(r.cards['Suit'] == current_suit) & (r.cards['Points'] == 3)]['Name']
                     card_to_play = card_to_play.iloc[0]
-                    print('{} plays {}'.format(r.name, card_to_play))
+                    if r == robot_1:
+                                pen1.goto(-97.5,0)
+                                pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                                pen1.stamp()
+                    elif r == robot_2:
+                                pen1.goto(97.5,0)
+                                pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                                pen1.stamp()
+                    elif r == robot_3:
+                                pen1.goto(0,92.5)
+                                pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                                pen1.stamp()
                     play_card(card_to_play, r)
 
         if not game.digged and current_suit not in r.suits:
@@ -297,11 +392,33 @@ def flow_chart(r):
                 cs = r.cards[r.cards['Suit'] == game.color]
                 card_to_play = cs[cs['Points'] == cs['Points'].min()].sample(n = 1)['Name']
                 card_to_play = card_to_play.iloc[0]
-                print('{} plays {}'.format(r.name, card_to_play))
+                if r == robot_1:
+                            pen1.goto(-97.5,0)
+                            pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                            pen1.stamp()
+                elif r == robot_2:
+                            pen1.goto(97.5,0)
+                            pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                            pen1.stamp()
+                elif r == robot_3:
+                            pen1.goto(0,92.5)
+                            pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                            pen1.stamp()
                 play_card(card_to_play, r)
             else: 
                 card_to_play = r.cards[r.cards['Points'] == r.cards['Points'].min()].sample(n = 1, random_state = None)['Name'].iloc[0]
-                print('{} plays {}'.format(r.name, card_to_play))
+                if r == robot_1:
+                            pen1.goto(-97.5,0)
+                            pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                            pen1.stamp()
+                elif r == robot_2:
+                            pen1.goto(97.5,0)
+                            pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                            pen1.stamp()
+                elif r == robot_3:
+                            pen1.goto(0,92.5)
+                            pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                            pen1.stamp()
                 play_card(card_to_play, r)
             game.digged = True
         elif game.digged and current_suit not in r.suits:
@@ -309,14 +426,36 @@ def flow_chart(r):
                 cs = r.cards[r.cards['Suit'] == game.color]
                 card_to_play = cs[cs['Points'] == cs['Points'].min()].sample(n = 1)['Name']
                 card_to_play = card_to_play.iloc[0]
-                print('{} plays {}'.format(r.name, card_to_play))
+                if r == robot_1:
+                            pen1.goto(-97.5,0)
+                            pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                            pen1.stamp()
+                elif r == robot_2:
+                            pen1.goto(97.5,0)
+                            pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                            pen1.stamp()
+                elif r == robot_3:
+                            pen1.goto(0,92.5)
+                            pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                            pen1.stamp()    
                 play_card(card_to_play, r)
             else: 
                 card_to_play = r.cards[r.cards['Points'] == r.cards['Points'].min()].sample(n = 1, random_state = None)['Name'].iloc[0]
-                print('{} plays {}'.format(r.name, card_to_play))
+                if r == robot_1:
+                            pen1.goto(-97.5,0)
+                            pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                            pen1.stamp()
+                elif r == robot_2:
+                            pen1.goto(97.5,0)
+                            pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                            pen1.stamp()
+                elif r == robot_3:
+                            pen1.goto(0,92.5)
+                            pen1.shape(df[df["Name"] == card_to_play]["Image"].iloc[0])
+                            pen1.stamp()
                 play_card(card_to_play, r)
-
-current_hand = pd.DataFrame(data = {}, columns = df.columns)
+   
+    
 
 def play_game():
     import warnings
@@ -473,7 +612,6 @@ def play_game():
 
 
 
-setup()
 
 
 import turtle
@@ -569,7 +707,8 @@ def press_p():
     def get_card(x,y):
         global cr1,cr2,cr3,cr4,cr5,cr6,cr7,cr8,crs,pc
         
-     
+    
+    
         
         if x > -387.5 and x < -312.5 and y > -265 and y < -145 and not cr1:
             print("Card 1 clicked")
@@ -584,6 +723,9 @@ def press_p():
             
             pen.stamp()
             pen.ht()
+            flow_chart(robot_1)
+            flow_chart(robot_2)
+            flow_chart(robot_3)
           
     
         elif x > -287.5 and x < -212.5 and y > -265 and y < -145 and not cr2:
@@ -600,6 +742,9 @@ def press_p():
             
             pen.stamp()
             pen.ht()
+            flow_chart(robot_1)
+            flow_chart(robot_2)
+            flow_chart(robot_3)
         elif x > -187.5  and x < -112.5 and y > -265 and y < -145 and not cr3:
             print('Card 3 clicked')
             play_card(pc[2],player)
@@ -613,6 +758,9 @@ def press_p():
             
             pen.stamp()
             pen.ht()
+            flow_chart(robot_1)
+            flow_chart(robot_2)
+            flow_chart(robot_3)
         elif x > -87.5 and x < -12.5 and y > -265 and y < -145 and not cr4:
             print('Card 4 clicked')
             play_card(pc[3],player)
@@ -626,6 +774,9 @@ def press_p():
             
             pen.stamp()
             pen.ht()
+            flow_chart(robot_1)
+            flow_chart(robot_2)
+            flow_chart(robot_3)
         elif x > 12.5 and x < 87.5 and y > -265 and y < -145 and not cr5:
             print('Card 5 clicked')
             play_card(pc[4],player)
@@ -639,6 +790,9 @@ def press_p():
             
             pen.stamp()
             pen.ht()
+            flow_chart(robot_1)
+            flow_chart(robot_2)
+            flow_chart(robot_3)
         elif x > 112.5 and x < 187.5 and y > -265 and y < -145 and not cr6:
             print('Card 6 clicked')
             play_card(pc[5],player)
@@ -652,6 +806,9 @@ def press_p():
             
             pen.stamp()
             pen.ht()
+            flow_chart(robot_1)
+            flow_chart(robot_2)
+            flow_chart(robot_3)
         elif x > 212.5 and x < 287.5 and y > -265 and y < -145 and not cr7:
             print('Card 7 clicked')
             play_card(pc[6],player)
@@ -665,6 +822,9 @@ def press_p():
             
             pen.stamp()
             pen.ht()
+            flow_chart(robot_1)
+            flow_chart(robot_2)
+            flow_chart(robot_3)
         elif x > 312.5 and x < 387.5 and y > -265 and y < -145 and not cr8:
             print('Card 8 clicked')   
             play_card(pc[7],player)
@@ -678,6 +838,9 @@ def press_p():
             
             pen.stamp()
             pen.ht()
+            flow_chart(robot_1)
+            flow_chart(robot_2)
+            flow_chart(robot_3)
     win.onclick(get_card)
 
 # Bind the press_p function to the "P" key
