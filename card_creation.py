@@ -3,7 +3,7 @@ import random
 import math as mt
 import turtle
 
-df = pd.read_csv('/Users/atulyasharan/Downloads/output.csv')
+df = pd.read_csv('output.csv')
 
 
 from PIL import Image
@@ -21,18 +21,18 @@ imgs = []
 # Resize each image in the imgs list before using it in Turtle
 for i in list(df["Name"]):
     a = i.split(" ")
-    img_path = '/Users/atulyasharan/Desktop/' + a[0].lower() + "_" + "of" + "_" + a[-1].lower() + ".gif"
-    resized_path = '/Users/atulyasharan/Desktop/resized_' + a[0].lower() + "_" + "of" + "_" + a[-1].lower() + ".gif"
+    img_path = '' + a[0].lower() + "_" + "of" + "_" + a[-1].lower() + ".gif"
+    resized_path = 'resized_' + a[0].lower() + "_" + "of" + "_" + a[-1].lower() + ".gif"
     
     # Resize the image and save it to the new path with the desired height and width
     resize_gif(img_path, resized_path, width=75, height=120)  # Set desired width and height
     imgs.append(resized_path)  # Store resized path in imgs list
 
 # Resize and append the red_joker image
-red_joker_path = "/Users/atulyasharan/Desktop/red_joker.gif"
-resized_red_joker_path = "/Users/atulyasharan/Desktop/resized_red_joker.gif"
-face_down_path = "/Users/atulyasharan/Desktop/face_down.gif"
-resized_face_down_path = "/Users/atulyasharan/Desktop/resized_face_down.gif"
+red_joker_path = "red_joker.gif"
+resized_red_joker_path = "resized_red_joker.gif"
+face_down_path = "face_down.gif"
+resized_face_down_path = "resized_face_down.gif"
 resize_gif(red_joker_path, resized_red_joker_path, width=75, height=120)
 resize_gif(face_down_path, resized_face_down_path, width=75, height=120)
 imgs.append(resized_red_joker_path)  # Store resized red joker in imgs list
@@ -482,7 +482,7 @@ player_cards = []
 for i in range(8):
     player_cards.append(player.cards.iloc[i]["Image"])
 
-player_cards
+print(player_cards)
 
 # Create the screen object
 win = turtle.Screen()
@@ -517,10 +517,10 @@ pen.write(game_description, align="left", font=("Times New Roman", 16, "italic")
 
 pen.goto(0, -200)
 pen.write("Press P to Play ", align="center", font=("Agency FB", 50, "italic"))
-
+pc = list(player.cards["Name"])
 
 def press_p():
-    global pen ,cr1,cr2,cr3,cr4,cr5,cr6,cr7,cr8, crs,win
+    global pen ,cr1,cr2,cr3,cr4,cr5,cr6,cr7,cr8, crs,win,pc
     win.tracer(100)
     cr1 = False
     cr2 = False
@@ -536,7 +536,7 @@ def press_p():
     print(player_cards)
     
     def re_arrange_cards():
-        global crs
+        global crs,pc
         pen.clear()
         pen.goto(-560, 0)
         pen.write("Robot - 1 ", font=("Agency FB", 20, "italic"))
@@ -547,13 +547,13 @@ def press_p():
         pen.goto(0, -300)
         pen.write("Player ", font=("Agency FB", 20, "italic"))
         pen.goto(450,0)
-        pen.shape("/Users/atulyasharan/Desktop/resized_face_down.gif")
+        pen.shape("resized_face_down.gif")
         pen.stamp()
         pen.goto(-400,0)
-        pen.shape("/Users/atulyasharan/Desktop/resized_face_down.gif")
+        pen.shape("resized_face_down.gif")
         pen.stamp()
         pen.goto(0,205)
-        pen.shape("/Users/atulyasharan/Desktop/resized_face_down.gif")
+        pen.shape("resized_face_down.gif")
         pen.stamp()
         for i in range (0, 8):
             if not crs[i]:
@@ -567,19 +567,14 @@ def press_p():
    
     win.listen()
     def get_card(x,y):
-        global cr1,cr2,cr3,cr4,cr5,cr6,cr7,cr8,crs
-    
+        global cr1,cr2,cr3,cr4,cr5,cr6,cr7,cr8,crs,pc
+        
      
         
         if x > -387.5 and x < -312.5 and y > -265 and y < -145 and not cr1:
             print("Card 1 clicked")
-            play_card(player.cards["Name"].iloc[0],player)
-            pen.shape(player_cards[0])  # Example of resized image
-            pen.goto(0,-92.5)
-            pen.st()
-            
-            pen.stamp()
-            pen.ht()
+            play_card(pc[0],player)
+        
             cr1 = True
             crs = [cr1,cr2,cr3,cr4,cr5,cr6,cr7,cr8]
             re_arrange_cards()
@@ -593,12 +588,8 @@ def press_p():
     
         elif x > -287.5 and x < -212.5 and y > -265 and y < -145 and not cr2:
             print('Card 2 clicked')
-            play_card(player.cards["Name"].iloc[1],player)
-            pen.shape(player_cards[1])  # Example of resized image
-            pen.goto(0,-92.5)
-            pen.st()
+            play_card(pc[1],player)
             
-            pen.stamp()
             pen.ht()
             cr2 = True
             crs = [cr1,cr2,cr3,cr4,cr5,cr6,cr7,cr8]
@@ -611,13 +602,8 @@ def press_p():
             pen.ht()
         elif x > -187.5  and x < -112.5 and y > -265 and y < -145 and not cr3:
             print('Card 3 clicked')
-            play_card(player.cards["Name"].iloc[2],player)
-            pen.shape(player_cards[2])  # Example of resized image
-            pen.goto(0,-92.5)
-            pen.st()
-            
-            pen.stamp()
-            pen.ht()
+            play_card(pc[2],player)
+        
             cr3 = True
             crs = [cr1,cr2,cr3,cr4,cr5,cr6,cr7,cr8]
             re_arrange_cards()
@@ -629,13 +615,8 @@ def press_p():
             pen.ht()
         elif x > -87.5 and x < -12.5 and y > -265 and y < -145 and not cr4:
             print('Card 4 clicked')
-            play_card(player.cards["Name"].iloc[3],player)
-            pen.shape(player_cards[3])  # Example of resized image
-            pen.goto(0,-92.5)
-            pen.st()
+            play_card(pc[3],player)
             
-            pen.stamp()
-            pen.ht()
             cr4 = True
             crs = [cr1,cr2,cr3,cr4,cr5,cr6,cr7,cr8]
             re_arrange_cards()
@@ -647,13 +628,8 @@ def press_p():
             pen.ht()
         elif x > 12.5 and x < 87.5 and y > -265 and y < -145 and not cr5:
             print('Card 5 clicked')
-            play_card(player.cards["Name"].iloc[4],player)
-            pen.shape(player_cards[4])  # Example of resized image
-            pen.goto(0,-92.5)
-            pen.st()
-            
-            pen.stamp()
-            pen.ht()
+            play_card(pc[4],player)
+           
             cr5 = True
             crs = [cr1,cr2,cr3,cr4,cr5,cr6,cr7,cr8]
             re_arrange_cards()
@@ -665,13 +641,8 @@ def press_p():
             pen.ht()
         elif x > 112.5 and x < 187.5 and y > -265 and y < -145 and not cr6:
             print('Card 6 clicked')
-            play_card(player.cards["Name"].iloc[5],player)
-            pen.shape(player_cards[5])  # Example of resized image
-            pen.goto(0,-92.5)
-            pen.st()
-            
-            pen.stamp()
-            pen.ht()
+            play_card(pc[5],player)
+          
             cr6 = True
             crs = [cr1,cr2,cr3,cr4,cr5,cr6,cr7,cr8]
             re_arrange_cards()
@@ -683,13 +654,8 @@ def press_p():
             pen.ht()
         elif x > 212.5 and x < 287.5 and y > -265 and y < -145 and not cr7:
             print('Card 7 clicked')
-            play_card(player.cards["Name"].iloc[6],player)
-            pen.shape(player_cards[6])  # Example of resized image
-            pen.goto(0,-92.5)
-            pen.st()
-            
-            pen.stamp()
-            pen.ht()
+            play_card(pc[6],player)
+           
             cr7 = True
             crs = [cr1,cr2,cr3,cr4,cr5,cr6,cr7,cr8]
             re_arrange_cards()
@@ -701,13 +667,8 @@ def press_p():
             pen.ht()
         elif x > 312.5 and x < 387.5 and y > -265 and y < -145 and not cr8:
             print('Card 8 clicked')   
-            play_card(player.cards["Name"].iloc[7],player)
-            pen.shape(player_cards[7])  # Example of resized image
-            pen.goto(0,-92.5)
-            pen.st()
-            
-            pen.stamp()
-            pen.ht()
+            play_card(pc[7],player)
+           
             cr8 = True   
             crs = [cr1,cr2,cr3,cr4,cr5,cr6,cr7,cr8]
             re_arrange_cards()  
